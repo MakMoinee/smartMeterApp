@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@android:color/white">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:cardBackgroundColor="@color/yellow"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="15dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+
+                <TextView
+                    android:id="@+id/lblCreateAccount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sen_bold"
+                    android:text="Create Your Account Now"
+                    android:textColor="@android:color/black"
+                    android:textSize="25sp" />
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cardTitle"
+            android:layout_margin="10dp"
+            app:cardBackgroundColor="@color/teal"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="15dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/layoutUsername"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/white"
+                    android:hint="Enter Username"
+                    android:textColorHint="@android:color/black">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editUsername"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sen_bold"
+                        android:inputType="textPersonName"
+                        android:lines="1"
+                        android:maxLines="1"
+                        android:minLines="1"
+                        android:textColor="@android:color/black"
+                        android:textSize="15sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/layoutPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/layoutUsername"
+                    android:layout_marginTop="10dp"
+                    android:background="@android:color/white"
+                    android:hint="Enter Password"
+                    android:textColorHint="@android:color/black"
+                    app:passwordToggleEnabled="true">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sen_bold"
+                        android:inputType="textPassword"
+                        android:lines="1"
+                        android:maxLines="1"
+                        android:minLines="1"
+                        android:textColor="@android:color/black"
+                        android:textSize="15sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/layoutConfirmPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/layoutPassword"
+                    android:layout_marginTop="10dp"
+                    android:background="@android:color/white"
+                    android:hint="Confirm Password"
+                    android:textColorHint="@android:color/black"
+                    app:passwordToggleEnabled="true">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editConfirmPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sen_bold"
+                        android:inputType="textPassword"
+                        android:lines="1"
+                        android:maxLines="1"
+                        android:minLines="1"
+                        android:textColor="@android:color/black"
+                        android:textSize="15sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <Button
+                    android:id="@+id/btnSave"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/layoutConfirmPassword"
+                    android:layout_marginTop="20dp"
+                    android:textColor="@android:color/white"
+                    android:text="Save"
+                    android:textSize="15sp"
+                    android:theme="@style/CustomBlackStyle" />
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+    </RelativeLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

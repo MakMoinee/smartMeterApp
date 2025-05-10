@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        app:cardBackgroundColor="@color/teal"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="15dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="15dp">
+
+            <TextView
+                android:id="@+id/lblDevice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sen_regular"
+                android:text="Your Device Meter"
+                android:textColor="@android:color/white"
+                android:textSize="23sp" />
+
+            <TextView
+                android:id="@+id/lblCurrent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblDevice"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/sen_bold"
+                android:text="Consumption:"
+                android:textColor="@android:color/white"
+                android:textSize="22sp" />
+
+            <TextView
+                android:id="@+id/lblVoltage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblCurrent"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/sen_bold"
+                android:text="0 kwh"
+                android:textColor="@android:color/white"
+                android:textSize="32sp" />
+
+            <LinearLayout
+                android:id="@+id/linear1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblVoltage"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnTurnOff"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/sen_bold"
+                    android:text="Turn Off"
+                    android:textColor="@android:color/white"
+                    android:textSize="15sp"
+                    android:theme="@style/CustomBlackStyle" />
+
+                <Button
+                    android:id="@+id/btnTurnOn"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/sen_bold"
+                    android:text="Turn On"
+                    android:textColor="@android:color/black"
+                    android:textSize="15sp"
+                    android:theme="@style/CustomYellowStyle" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/linear1"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnCheck"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/sen_bold"
+                    android:text="Ping"
+                    android:textColor="@android:color/white"
+                    android:textSize="15sp"
+                    android:theme="@style/CustomBlackStyle" />
+
+                <Button
+                    android:id="@+id/btnDelete"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/sen_bold"
+                    android:text="Delete"
+                    android:textColor="@android:color/white"
+                    android:textSize="15sp"
+                    android:theme="@style/CustomRedStyle" />
+            </LinearLayout>
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

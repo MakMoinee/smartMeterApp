@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:cardBackgroundColor="@color/teal"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="15dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp">
+
+            <TextView
+                android:id="@+id/lblAddDevice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sen_bold"
+                android:text="Add Device"
+                android:textColor="@android:color/white"
+                android:textSize="20sp" />
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutDeviceName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblAddDevice"
+                android:layout_marginTop="20dp"
+                android:background="@android:color/white"
+                android:hint="Device Name"
+                android:textColorHint="@android:color/black">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editDeviceName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sen_bold"
+                    android:inputType="textPersonName"
+                    android:lines="1"
+                    android:maxLines="1"
+                    android:minLines="1"
+                    android:textColor="@android:color/black"
+                    android:textSize="15sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutIP"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/layoutDeviceName"
+                android:layout_marginTop="10dp"
+                android:background="@android:color/white"
+                android:hint="IP Address"
+                android:textColorHint="@android:color/black">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editDeviceIP"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sen_bold"
+                    android:inputType="text"
+                    android:lines="1"
+                    android:maxLines="1"
+                    android:minLines="1"
+                    android:textColor="@android:color/black"
+                    android:textSize="15sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/layoutIP"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnPing"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/sen_bold"
+                    android:text="Ping"
+                    android:textColor="@android:color/black"
+                    android:textSize="12sp"
+                    android:theme="@style/CustomYellowStyle" />
+
+                <Button
+                    android:id="@+id/btnSave"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:enabled="false"
+                    android:fontFamily="@font/sen_bold"
+                    android:text="Save"
+                    android:textColor="@android:color/white"
+                    android:textSize="12sp"
+                    android:theme="@style/CustomBlackStyle" />
+
+                <Button
+                    android:id="@+id/btnCancel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/sen_bold"
+                    android:text="Cancel"
+                    android:textColor="@android:color/white"
+                    android:textSize="12sp"
+                    android:theme="@style/CustomRedStyle" />
+            </LinearLayout>
+        </RelativeLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

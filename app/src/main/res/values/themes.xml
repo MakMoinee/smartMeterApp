@@ -1,0 +1,41 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.SMESurviveApp" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    </style>
+
+    <style name="Theme.SMESurviveApp" parent="Base.Theme.SMESurviveApp" />
+
+    <style name="CustomBlackStyle" parent="Theme.Design.Light">
+        <item name="colorPrimary">#000000</item>
+        <item name="colorAccent">#000000</item>
+    </style>
+
+    <style name="CustomYellowStyle" parent="Theme.Design.Light">
+        <item name="colorPrimary">#FFEB3B</item>
+        <item name="colorAccent">#FFEB3B</item>
+    </style>
+
+    <style name="CustomCyanStyle" parent="Theme.Design.Light">
+        <item name="colorPrimary">#00B7C2</item>
+        <item name="colorAccent">#00B7C2</item>
+    </style>
+
+    <style name="CustomRedStyle" parent="Theme.Design.Light">
+        <item name="colorPrimary">#F44336</item>
+        <item name="colorAccent">#F44336</item>
+    </style>
+
+
+    <style name="Theme.SMESurviveApp.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+
+        <item name="colorPrimary">#000000</item>
+    </style>
+
+    <style name="Theme.SMESurviveApp.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.SMESurviveApp.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+</resources>

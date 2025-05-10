@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:cardBackgroundColor="@android:color/white"
+        app:cardCornerRadius="15dp"
+        app:cardElevation="10dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:padding="15dp">
+
+            <TextView
+                android:id="@+id/txtDeviceName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:fontFamily="@font/sen_bold"
+                android:text="Device Name"
+                android:textColor="@android:color/black"
+                android:textSize="14sp" />
+
+            <ImageButton
+                android:id="@+id/btnDelete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_delete_red" />
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
