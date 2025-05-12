@@ -2,7 +2,6 @@ package com.thesis.smesurviveapp.ui.devices;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,7 +19,6 @@ import com.github.MakMoinee.library.dialogs.MyDialog;
 import com.github.MakMoinee.library.interfaces.DefaultBaseListener;
 import com.github.MakMoinee.library.preference.LoginPref;
 import com.github.MakMoinee.library.services.Utils;
-import com.thesis.smesurviveapp.DeviceActivity;
 import com.thesis.smesurviveapp.adapters.DeviceAdapters;
 import com.thesis.smesurviveapp.databinding.DialogAddDeviceBinding;
 import com.thesis.smesurviveapp.databinding.FragmentDevicesBinding;
@@ -68,7 +66,7 @@ public class DeviceFragment extends Fragment {
         devicesList = new ArrayList<>();
         binding.recycler.setAdapter(null);
         userID = new LoginPref(requireContext()).getIntItem("userID");
-        Log.e("userid>>>",Integer.toString(userID));
+        Log.e("userid>>>", Integer.toString(userID));
         deviceDB.fetchDevices(userID, new DefaultBaseListener() {
             @Override
             public <T> void onSuccess(T any) {
@@ -103,7 +101,7 @@ public class DeviceFragment extends Fragment {
 
             @Override
             public void onError(Error error) {
-                Log.e("error_load",error.getLocalizedMessage());
+                Log.e("error_load", error.getLocalizedMessage());
             }
         });
     }
@@ -125,6 +123,7 @@ public class DeviceFragment extends Fragment {
                         deviceDB.deleteDevice(devices.getDeviceID(), new DefaultBaseListener() {
                             @Override
                             public <T> void onSuccess(T any) {
+                                com.thesis.smesurviveapp.commons.Utils.isTurnedOn = false;
                                 Toast.makeText(requireContext(), "Successfully Deleted Device", Toast.LENGTH_SHORT).show();
                                 loadData();
                             }

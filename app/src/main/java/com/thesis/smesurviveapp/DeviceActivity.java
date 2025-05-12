@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.github.MakMoinee.library.dialogs.MyDialog;
 import com.github.MakMoinee.library.interfaces.DefaultBaseListener;
 import com.google.gson.Gson;
+import com.thesis.smesurviveapp.commons.Utils;
 import com.thesis.smesurviveapp.databinding.ActivityDevicesBinding;
 import com.thesis.smesurviveapp.models.Devices;
 import com.thesis.smesurviveapp.services.DeviceDB;
@@ -93,17 +94,33 @@ public class DeviceActivity extends AppCompatActivity {
                         try {
                             voltage = obj.getDouble("voltage");
                             current = powerWatts / voltage;
-                            getElapseTime();
-                            double power = current * voltage;
-                            energyWh += power * elapsedTimeHours;
-                            energyKWh = energyWh / 1000.0;
 
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    binding.lblVoltage.setText(String.format("%s kwh", Double.toString(energyKWh)));
-                                }
-                            });
+                            double simulatedPowerFluctuation = (Math.random() - 0.5) * 0.5;
+                            double power = current * voltage + simulatedPowerFluctuation;
+
+                            if (Utils.isTurnedOn) {
+                                double simulatedElapseTime = 1.0 / 60.0;
+                                energyWh += power * simulatedElapseTime;
+                                energyKWh = energyWh / 1000.0;
+
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        binding.txtPower.setText(String.format("%.2f", power));
+                                        binding.txtVoltage.setText(String.format("%.2f", voltage));
+                                        binding.txtConsumption.setText(String.format("%.2f kwh", energyKWh));
+                                    }
+                                });
+                            } else {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        binding.txtPower.setText(String.format("%.2f", power));
+                                        binding.txtVoltage.setText(String.format("%.2f", voltage));
+                                    }
+                                });
+                            }
+
                         } catch (JSONException e) {
                             voltage = 0;
                         }
@@ -143,6 +160,7 @@ public class DeviceActivity extends AppCompatActivity {
                 @Override
                 public <T> void onSuccess(T any) {
                     myDialog.dismiss();
+                    Utils.isTurnedOn = false;
                     Toast.makeText(DeviceActivity.this, "Successfully Turned Off Device Meter", Toast.LENGTH_SHORT).show();
                 }
 
@@ -161,6 +179,7 @@ public class DeviceActivity extends AppCompatActivity {
                 @Override
                 public <T> void onSuccess(T any) {
                     myDialog.dismiss();
+                    Utils.isTurnedOn = true;
                     Toast.makeText(DeviceActivity.this, "Successfully Turned On Device Meter", Toast.LENGTH_SHORT).show();
                 }
 
@@ -179,6 +198,7 @@ public class DeviceActivity extends AppCompatActivity {
                 @Override
                 public <T> void onSuccess(T any) {
                     myDialog.dismiss();
+                    Utils.isTurnedOn = false;
                     Toast.makeText(DeviceActivity.this, "Successfully Deleted Device", Toast.LENGTH_SHORT).show();
                     finish();
                 }

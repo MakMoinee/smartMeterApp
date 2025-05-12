@@ -28,10 +28,56 @@
                 android:textSize="23sp" />
 
             <TextView
-                android:id="@+id/lblCurrent"
+                android:id="@+id/lblVoltage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lblDevice"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/sen_bold"
+                android:text="Voltage:"
+                android:textColor="@android:color/white"
+                android:textSize="22sp" />
+
+            <TextView
+                android:id="@+id/txtVoltage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblVoltage"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/sen_bold"
+                android:text="0"
+                android:textColor="@android:color/white"
+                android:textSize="32sp" />
+
+            <TextView
+                android:id="@+id/lblPower"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtVoltage"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/sen_bold"
+                android:text="Power:"
+                android:textColor="@android:color/white"
+                android:textSize="22sp" />
+
+            <TextView
+                android:id="@+id/txtPower"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblPower"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/sen_bold"
+                android:text="0"
+                android:textColor="@android:color/white"
+                android:textSize="32sp" />
+
+            <TextView
+                android:id="@+id/lblConsumption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtPower"
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/sen_bold"
                 android:text="Consumption:"
@@ -39,10 +85,10 @@
                 android:textSize="22sp" />
 
             <TextView
-                android:id="@+id/lblVoltage"
+                android:id="@+id/txtConsumption"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/lblCurrent"
+                android:layout_below="@+id/lblConsumption"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/sen_bold"
@@ -54,7 +100,7 @@
                 android:id="@+id/linear1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/lblVoltage"
+                android:layout_below="@+id/txtConsumption"
                 android:layout_marginTop="20dp"
                 android:orientation="horizontal">
 
