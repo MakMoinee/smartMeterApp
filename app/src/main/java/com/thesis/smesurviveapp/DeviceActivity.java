@@ -3,10 +3,12 @@ package com.thesis.smesurviveapp;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.github.MakMoinee.library.dialogs.MyDialog;
@@ -14,7 +16,10 @@ import com.github.MakMoinee.library.interfaces.DefaultBaseListener;
 import com.google.gson.Gson;
 import com.thesis.smesurviveapp.commons.Utils;
 import com.thesis.smesurviveapp.databinding.ActivityDevicesBinding;
+import com.thesis.smesurviveapp.databinding.DialogSetConsumptionBinding;
+import com.thesis.smesurviveapp.databinding.DialogSetVoltageBinding;
 import com.thesis.smesurviveapp.models.Devices;
+import com.thesis.smesurviveapp.preference.DeviceSettingsPref;
 import com.thesis.smesurviveapp.services.DeviceDB;
 import com.thesis.smesurviveapp.services.DeviceRequestService;
 
@@ -43,6 +48,14 @@ public class DeviceActivity extends AppCompatActivity {
     double energyWh = 0.0;
 
     double energyKWh = 0.0;
+
+    AlertDialog dialogConsumption;
+    AlertDialog dialogVoltage;
+
+    DialogSetConsumptionBinding consumptionBinding;
+
+    DialogSetVoltageBinding voltageBinding;
+
 
     private final Handler handler = new Handler();
     private final Runnable dataLoaderRunnable = new Runnable() {
@@ -98,10 +111,32 @@ public class DeviceActivity extends AppCompatActivity {
                             double simulatedPowerFluctuation = (Math.random() - 0.5) * 0.5;
                             double power = current * voltage + simulatedPowerFluctuation;
 
+
+                            if (Utils.isVoltageControlled) {
+                                float voltage = new DeviceSettingsPref(DeviceActivity.this).getVoltage();
+                                if (voltage > voltage) {
+                                    myDialog.setCustomMessage("Voltage Exceeded, Turning it off ...");
+                                    binding.btnTurnOff.performClick();
+                                    return;
+                                }
+                            }
+
                             if (Utils.isTurnedOn) {
+
                                 double simulatedElapseTime = 1.0 / 60.0;
                                 energyWh += power * simulatedElapseTime;
                                 energyKWh = energyWh / 1000.0;
+
+                                if (Utils.isConsumptionControlled) {
+                                    float myKWH = new DeviceSettingsPref(DeviceActivity.this).getConsumption();
+                                    if (energyKWh > myKWH) {
+
+                                        myDialog.setCustomMessage("Energy Consumption Exceeded, Turning it off ...");
+                                        binding.btnTurnOff.performClick();
+                                        return;
+                                    }
+                                }
+
 
                                 runOnUiThread(new Runnable() {
                                     @Override
@@ -160,6 +195,7 @@ public class DeviceActivity extends AppCompatActivity {
                 @Override
                 public <T> void onSuccess(T any) {
                     myDialog.dismiss();
+                    myDialog = new MyDialog(DeviceActivity.this);
                     Utils.isTurnedOn = false;
                     Toast.makeText(DeviceActivity.this, "Successfully Turned Off Device Meter", Toast.LENGTH_SHORT).show();
                 }
@@ -167,6 +203,7 @@ public class DeviceActivity extends AppCompatActivity {
                 @Override
                 public void onError(Error error) {
                     myDialog.dismiss();
+                    myDialog = new MyDialog(DeviceActivity.this);
                     Toast.makeText(DeviceActivity.this, "Failed To Turn Off Device Meter, Please check network or ip and try again", Toast.LENGTH_SHORT).show();
                 }
             });
@@ -209,6 +246,77 @@ public class DeviceActivity extends AppCompatActivity {
                     Toast.makeText(DeviceActivity.this, "Failed To Delete Device Meter, Please Try Again Later", Toast.LENGTH_SHORT).show();
                 }
             });
+        });
+
+        binding.btnSetConsumption.setOnClickListener(v -> {
+            consumptionBinding = DialogSetConsumptionBinding.inflate(LayoutInflater.from(DeviceActivity.this), null, false);
+            AlertDialog.Builder mBuilder = new AlertDialog.Builder(DeviceActivity.this);
+            mBuilder.setView(consumptionBinding.getRoot());
+            mBuilder.setCancelable(false);
+            setConsumptionDialogListeners();
+            dialogConsumption = mBuilder.create();
+            dialogConsumption.show();
+        });
+
+        binding.btnSetVoltage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                voltageBinding = DialogSetVoltageBinding.inflate(LayoutInflater.from(DeviceActivity.this), null, false);
+                AlertDialog.Builder mBuilder = new AlertDialog.Builder(DeviceActivity.this);
+                mBuilder.setView(voltageBinding.getRoot());
+                mBuilder.setCancelable(false);
+                setVoltageDialogListeners();
+                dialogVoltage = mBuilder.create();
+                dialogVoltage.show();
+            }
+        });
+    }
+
+    private void setVoltageDialogListeners() {
+        voltageBinding.btnSetVoltage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String volt = voltageBinding.editVolt.getText().toString().trim();
+                if (volt.equals("")) {
+                    Toast.makeText(DeviceActivity.this, "Please Don't Leave Empty Fields", Toast.LENGTH_SHORT).show();
+                } else {
+                    float voltage = Float.parseFloat(volt);
+                    new DeviceSettingsPref(DeviceActivity.this).storeVoltage(voltage);
+                    if (voltage != 0) {
+                        Toast.makeText(DeviceActivity.this, "Successfully Set Voltage", Toast.LENGTH_SHORT).show();
+                        dialogVoltage.dismiss();
+                        Utils.isVoltageControlled = true;
+                    } else {
+                        Toast.makeText(DeviceActivity.this, "Voltage Set To Zero.. Setting No Cap On Voltage", Toast.LENGTH_SHORT).show();
+                        dialogVoltage.dismiss();
+                        Utils.isVoltageControlled = false;
+                    }
+                }
+            }
+        });
+    }
+
+    private void setConsumptionDialogListeners() {
+        consumptionBinding.btnSetConsumption.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String kwh = consumptionBinding.editKwh.getText().toString().trim();
+                if (kwh.equals("")) {
+                    Toast.makeText(DeviceActivity.this, "Please Don't Leave Empty Fields", Toast.LENGTH_SHORT).show();
+                } else {
+                    float energy = Float.parseFloat(kwh);
+                    new DeviceSettingsPref(DeviceActivity.this).storeConsumption(energy);
+                    if (energy != 0) {
+                        Toast.makeText(DeviceActivity.this, "Successfully Set Consumption", Toast.LENGTH_SHORT).show();
+                        dialogConsumption.dismiss();
+                        Utils.isConsumptionControlled = true;
+                    } else {
+                        Toast.makeText(DeviceActivity.this, "Consumption Set To Zero.. Setting No Cap On Consumption", Toast.LENGTH_SHORT).show();
+                        dialogConsumption.dismiss();
+                        Utils.isConsumptionControlled = false;
+                    }
+                }
+            }
         });
     }
 
