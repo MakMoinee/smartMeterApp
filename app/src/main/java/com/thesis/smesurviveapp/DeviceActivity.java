@@ -108,8 +108,8 @@ public class DeviceActivity extends AppCompatActivity {
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        binding.txtPower.speedTo((float) power);
-                                        binding.txtVoltage.speedTo((float) voltage);
+                                        binding.txtPower.speedTo((float) Math.round(power * 100) / 100);
+                                        binding.txtVoltage.speedTo((float) Math.round(voltage * 100) / 100);
                                         binding.txtConsumption.setText(String.format("%.2f kwh", energyKWh));
                                     }
                                 });
@@ -117,8 +117,8 @@ public class DeviceActivity extends AppCompatActivity {
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        binding.txtPower.speedTo((float) power);
-                                        binding.txtVoltage.speedTo((float) voltage);
+                                        binding.txtPower.speedTo((float) Math.round(power * 100) / 100);
+                                        binding.txtVoltage.speedTo((float) Math.round(voltage * 100) / 100);
                                     }
                                 });
                             }
