@@ -95,15 +95,24 @@ public class DeviceActivity extends AppCompatActivity {
                             voltage = obj.getDouble("volt");
                             current = powerWatts / voltage;
 
+                            if (voltage == 0.0 || Double.isNaN(voltage) || Double.isInfinite(voltage)) {
+                                voltage = 0.1; // fallback or show 0 safely in UI
+                            }
 
 
                             double simulatedPowerFluctuation = (Math.random() - 0.5) * 0.5;
                             double power = current * voltage + simulatedPowerFluctuation;
 
+                            Log.e("get3", Double.toString(voltage));
+                            Log.e("get4", Double.toString(power));
+
                             if (Utils.isTurnedOn) {
                                 double simulatedElapseTime = 1.0 / 60.0;
                                 energyWh += power * simulatedElapseTime;
                                 energyKWh = energyWh / 1000.0;
+
+                                Log.e("get2", Double.toString(energyKWh));
+                                Log.e("get3", Double.toString(voltage));
 
                                 runOnUiThread(new Runnable() {
                                     @Override
