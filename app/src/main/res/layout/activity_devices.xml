@@ -40,18 +40,13 @@
 
             <com.github.anastr.speedviewlib.SpeedView
                 android:id="@+id/txtVoltage"
-                android:layout_width="140dp"
+                android:layout_width="150dp"
                 android:layout_height="140dp"
                 android:layout_below="@+id/lblVoltage"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
-                app:sv_endDegree="405"
-                app:sv_indicator="NormalIndicator"
-                app:sv_maxSpeed="250"
-                app:sv_minSpeed="0"
-                app:sv_sectionStyle="BUTT"
-                app:sv_startDegree="135"
                 app:sv_unit="v"
+                app:sv_maxSpeed="300"
                 app:sv_withTremble="false" />
 
             <TextView
@@ -67,18 +62,15 @@
 
             <com.github.anastr.speedviewlib.SpeedView
                 android:id="@+id/txtPower"
-                android:layout_width="140dp"
+                android:layout_width="150dp"
                 android:layout_height="140dp"
                 android:layout_below="@+id/lblPower"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="20dp"
-                app:sv_endDegree="405"
-                app:sv_indicator="NormalIndicator"
-                app:sv_maxSpeed="5000"
+                app:sv_maxSpeed="230"
                 app:sv_minSpeed="0"
                 app:sv_sectionStyle="BUTT"
-                app:sv_startDegree="135"
-                app:sv_unit="v"
+                app:sv_unit=""
                 app:sv_withTremble="false" />
 
             <TextView
