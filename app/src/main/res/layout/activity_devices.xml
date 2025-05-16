@@ -38,17 +38,22 @@
                 android:textColor="@android:color/white"
                 android:textSize="22sp" />
 
-            <TextView
+            <com.github.anastr.speedviewlib.SpeedView
                 android:id="@+id/txtVoltage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="140dp"
+                android:layout_height="140dp"
                 android:layout_below="@+id/lblVoltage"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
-                android:fontFamily="@font/sen_bold"
-                android:text="0"
-                android:textColor="@android:color/white"
-                android:textSize="32sp" />
+                app:unit="v"
+                app:withTremble="false"
+                app:indicator="NormalIndicator"
+                app:sectionStyle="bold"
+                app:startDegree="135"
+                app:endDegree="405"
+                app:maxSpeed="250"
+                app:minSpeed="0"
+                />
 
             <TextView
                 android:id="@+id/lblPower"
@@ -61,17 +66,22 @@
                 android:textColor="@android:color/white"
                 android:textSize="22sp" />
 
-            <TextView
+            <com.github.anastr.speedviewlib.SpeedView
                 android:id="@+id/txtPower"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="140dp"
+                android:layout_height="140dp"
                 android:layout_below="@+id/lblPower"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/sen_bold"
-                android:text="0"
-                android:textColor="@android:color/white"
-                android:textSize="32sp" />
+                android:layout_marginTop="20dp"
+                app:unit=""
+                app:withTremble="false"
+                app:indicator="NormalIndicator"
+                app:sectionStyle="bold"
+                app:startDegree="135"
+                app:endDegree="405"
+                app:maxSpeed="5000"
+                app:minSpeed="0"
+                />
 
             <TextView
                 android:id="@+id/lblConsumption"
