@@ -115,13 +115,15 @@ public class DeviceActivity extends AppCompatActivity {
                                 energyWh += power * simulatedElapseTime;
                                 energyKWh = energyWh / 1000.0;
 
+                                final double p = power;
+
                                 Log.e("get2", Double.toString(energyKWh));
                                 Log.e("get3", Double.toString(voltage));
 
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        binding.txtPower.speedTo((float) Math.round(power * 100) / 100);
+                                        binding.txtPower.speedTo((float) Math.round(p * 100) / 100);
                                         binding.txtVoltage.speedTo((float) Math.round(voltage * 100) / 100);
                                         binding.txtConsumption.setText(String.format("%.2f kwh", energyKWh));
                                     }
