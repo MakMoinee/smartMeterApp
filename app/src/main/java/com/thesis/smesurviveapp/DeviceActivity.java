@@ -129,10 +129,11 @@ public class DeviceActivity extends AppCompatActivity {
                                     }
                                 });
                             } else {
+                                final double p = power;
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        binding.txtPower.speedTo((float) Math.round(power * 100) / 100);
+                                        binding.txtPower.speedTo((float) Math.round(p * 100) / 100);
                                         binding.txtVoltage.speedTo((float) Math.round(voltage * 100) / 100);
                                     }
                                 });
