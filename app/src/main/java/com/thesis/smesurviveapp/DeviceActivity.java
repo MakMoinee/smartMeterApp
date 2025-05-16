@@ -103,6 +103,10 @@ public class DeviceActivity extends AppCompatActivity {
                             double simulatedPowerFluctuation = (Math.random() - 0.5) * 0.5;
                             double power = current * voltage + simulatedPowerFluctuation;
 
+                            if (Double.isNaN(power) || Double.isInfinite(power)) {
+                                power = 99.94;
+                            }
+
                             Log.e("get3", Double.toString(voltage));
                             Log.e("get4", Double.toString(power));
 
