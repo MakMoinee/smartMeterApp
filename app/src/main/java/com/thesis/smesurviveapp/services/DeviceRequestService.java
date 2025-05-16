@@ -68,7 +68,7 @@ public class DeviceRequestService extends LocalVolleyRequest {
 
     public void getDeviceVoltage(String ip, DefaultBaseListener listener) {
         LocalVolleyRequestBody body = new LocalVolleyRequestBody.LocalVolleyRequestBodyBuilder()
-                .setUrl(String.format("http://%s/relay/voltage", ip))
+                .setUrl(String.format("http://%s/voltage", ip))
                 .build();
         this.sendJSONGetRequest(body, new LocalVolleyRequestListener() {
 
