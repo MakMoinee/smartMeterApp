@@ -49,7 +49,7 @@ public class DeviceActivity extends AppCompatActivity {
         @Override
         public void run() {
             loadData();
-            handler.postDelayed(this, 30000); // run again after 30 seconds
+            handler.postDelayed(this, 5000); // run again after 30 seconds
         }
     };
 
@@ -130,7 +130,7 @@ public class DeviceActivity extends AppCompatActivity {
 
             @Override
             public void onError(Error error) {
-
+                Log.e("error", error.getLocalizedMessage());
             }
         });
     }
