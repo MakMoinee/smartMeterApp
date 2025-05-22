@@ -36,12 +36,18 @@ public class LocalSQLite extends MSqliteDBHelper {
                 "status TEXT NOT NULL, " +
                 "registeredDate TEXT NOT NULL)");
 
+        db.execSQL("CREATE TABLE IF NOT EXISTS consumption (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "deviceID INTEGER NOT NULL, " +
+                "consumption REAL NOT NULL)");
+
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS users");
         db.execSQL("DROP TABLE IF EXISTS devices");
+        db.execSQL("DROP TABLE IF EXISTS consumption");
         onCreate(db);
     }
 }
