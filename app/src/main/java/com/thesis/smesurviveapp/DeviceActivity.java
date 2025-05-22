@@ -118,6 +118,7 @@ public class DeviceActivity extends AppCompatActivity {
                             double simulatedPowerFluctuation = (Math.random() - 0.5) * 0.5;
                             double power = current * voltage + simulatedPowerFluctuation;
 
+                            Log.e("voltage",Double.toString(voltage));
 
                             if (Utils.isVoltageControlled) {
                                 float mv = new DeviceSettingsPref(DeviceActivity.this).getVoltage();
