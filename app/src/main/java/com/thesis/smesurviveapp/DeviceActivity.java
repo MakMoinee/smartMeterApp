@@ -109,10 +109,11 @@ public class DeviceActivity extends AppCompatActivity {
             @Override
             public <T> void onSuccess(T any) {
                 if (any instanceof JSONObject) {
+
                     JSONObject obj = (JSONObject) any;
                     if (obj != null) {
                         try {
-                            voltage = obj.getDouble("voltage");
+                            voltage = obj.getDouble("volt");
                             current = powerWatts / voltage;
 
                             double simulatedPowerFluctuation = (Math.random() - 0.5) * 0.5;
