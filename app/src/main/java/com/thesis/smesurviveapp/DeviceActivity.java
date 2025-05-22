@@ -20,8 +20,10 @@ import com.thesis.smesurviveapp.commons.Utils;
 import com.thesis.smesurviveapp.databinding.ActivityDevicesBinding;
 import com.thesis.smesurviveapp.databinding.DialogSetConsumptionBinding;
 import com.thesis.smesurviveapp.databinding.DialogSetVoltageBinding;
+import com.thesis.smesurviveapp.models.Consumptions;
 import com.thesis.smesurviveapp.models.Devices;
 import com.thesis.smesurviveapp.preference.DeviceSettingsPref;
+import com.thesis.smesurviveapp.services.DeviceConsumption;
 import com.thesis.smesurviveapp.services.DeviceDB;
 import com.thesis.smesurviveapp.services.DeviceRequestService;
 import com.thesis.smesurviveapp.services.MonitoringService;
@@ -58,6 +60,7 @@ public class DeviceActivity extends AppCompatActivity {
     DialogSetConsumptionBinding consumptionBinding;
 
     DialogSetVoltageBinding voltageBinding;
+    DeviceConsumption deviceConsumption;
 
 
     private final Handler handler = new Handler();
@@ -82,6 +85,7 @@ public class DeviceActivity extends AppCompatActivity {
         requestService = new DeviceRequestService(DeviceActivity.this);
         deviceDB = new DeviceDB(DeviceActivity.this);
         myDialog = new MyDialog(DeviceActivity.this);
+        deviceConsumption = new DeviceConsumption(DeviceActivity.this);
 
         String rawDevice = getIntent().getStringExtra("device");
         if (rawDevice != null) {
@@ -116,10 +120,27 @@ public class DeviceActivity extends AppCompatActivity {
 
 
                             if (Utils.isVoltageControlled) {
-                                float voltage = new DeviceSettingsPref(DeviceActivity.this).getVoltage();
-                                if (voltage > voltage) {
+                                float mv = new DeviceSettingsPref(DeviceActivity.this).getVoltage();
+                                if (voltage > mv) {
                                     myDialog.setCustomMessage("Voltage Exceeded, Turning it off ...");
-                                    binding.btnTurnOff.performClick();
+                                    myDialog.show();
+                                    requestService.turnOffDevice(selectedDevice.getDeviceIP(), new DefaultBaseListener() {
+                                        @Override
+                                        public <T> void onSuccess(T any) {
+                                            myDialog.dismiss();
+                                            myDialog = new MyDialog(DeviceActivity.this);
+                                            Utils.isTurnedOn = false;
+                                            Utils.rawDevice = "";
+                                            Toast.makeText(DeviceActivity.this, "Successfully Turned Off Device Meter", Toast.LENGTH_SHORT).show();
+                                        }
+
+                                        @Override
+                                        public void onError(Error error) {
+                                            myDialog.dismiss();
+                                            myDialog = new MyDialog(DeviceActivity.this);
+                                            Toast.makeText(DeviceActivity.this, "Failed To Turn Off Device Meter, Please check network or ip and try again", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
                                     return;
                                 }
                             }
@@ -135,7 +156,24 @@ public class DeviceActivity extends AppCompatActivity {
                                     if (energyKWh > myKWH) {
 
                                         myDialog.setCustomMessage("Energy Consumption Exceeded, Turning it off ...");
-                                        binding.btnTurnOff.performClick();
+                                        myDialog.show();
+                                        requestService.turnOffDevice(selectedDevice.getDeviceIP(), new DefaultBaseListener() {
+                                            @Override
+                                            public <T> void onSuccess(T any) {
+                                                myDialog.dismiss();
+                                                myDialog = new MyDialog(DeviceActivity.this);
+                                                Utils.isTurnedOn = false;
+                                                Utils.rawDevice = "";
+                                                Toast.makeText(DeviceActivity.this, "Successfully Turned Off Device Meter", Toast.LENGTH_SHORT).show();
+                                            }
+
+                                            @Override
+                                            public void onError(Error error) {
+                                                myDialog.dismiss();
+                                                myDialog = new MyDialog(DeviceActivity.this);
+                                                Toast.makeText(DeviceActivity.this, "Failed To Turn Off Device Meter, Please check network or ip and try again", Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
                                         return;
                                     }
                                 }
@@ -144,6 +182,22 @@ public class DeviceActivity extends AppCompatActivity {
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
+                                        Consumptions c = new Consumptions.ConsumptionBuilder()
+                                                .setConsumption(energyKWh)
+                                                .setDeviceID(selectedDevice.getDeviceID())
+                                                .build();
+                                        deviceConsumption.upsertData(c, new DefaultBaseListener() {
+                                            @Override
+                                            public <T> void onSuccess(T any) {
+
+                                                Log.e("success_mon", "success update");
+                                            }
+
+                                            @Override
+                                            public void onError(Error error) {
+                                                Log.e("background_err", error.getLocalizedMessage());
+                                            }
+                                        });
                                         binding.txtPower.setText(String.format("%.2f", power));
                                         binding.txtVoltage.setText(String.format("%.2f", voltage));
                                         binding.txtConsumption.setText(String.format("%.2f kwh", energyKWh));
@@ -201,8 +255,8 @@ public class DeviceActivity extends AppCompatActivity {
                     myDialog = new MyDialog(DeviceActivity.this);
                     Utils.isTurnedOn = false;
                     Utils.rawDevice = "";
-                    Intent stopIntent = new Intent(DeviceActivity.this, MonitoringService.class);
-                    stopService(stopIntent);
+//                    Intent stopIntent = new Intent(DeviceActivity.this, MonitoringService.class);
+//                    stopService(stopIntent);
                     Toast.makeText(DeviceActivity.this, "Successfully Turned Off Device Meter", Toast.LENGTH_SHORT).show();
                 }
 
@@ -223,9 +277,9 @@ public class DeviceActivity extends AppCompatActivity {
                 public <T> void onSuccess(T any) {
                     myDialog.dismiss();
                     Utils.isTurnedOn = true;
-                    Intent serviceIntent = new Intent(DeviceActivity.this, MonitoringService.class);
+//                    Intent serviceIntent = new Intent(DeviceActivity.this, MonitoringService.class);
                     Utils.rawDevice = new Gson().toJson(selectedDevice);
-                    ContextCompat.startForegroundService(DeviceActivity.this, serviceIntent);
+//                    ContextCompat.startForegroundService(DeviceActivity.this, serviceIntent);
 
                     Toast.makeText(DeviceActivity.this, "Successfully Turned On Device Meter", Toast.LENGTH_SHORT).show();
                 }
@@ -297,16 +351,18 @@ public class DeviceActivity extends AppCompatActivity {
                     new DeviceSettingsPref(DeviceActivity.this).storeVoltage(voltage);
                     if (voltage != 0) {
                         Toast.makeText(DeviceActivity.this, "Successfully Set Voltage", Toast.LENGTH_SHORT).show();
-                        dialogVoltage.dismiss();
                         Utils.isVoltageControlled = true;
+                        dialogVoltage.dismiss();
                     } else {
                         Toast.makeText(DeviceActivity.this, "Voltage Set To Zero.. Setting No Cap On Voltage", Toast.LENGTH_SHORT).show();
-                        dialogVoltage.dismiss();
                         Utils.isVoltageControlled = false;
+                        dialogVoltage.dismiss();
                     }
                 }
             }
         });
+
+        voltageBinding.btnCancel.setOnClickListener(v -> dialogVoltage.dismiss());
     }
 
     private void setConsumptionDialogListeners() {
@@ -321,16 +377,17 @@ public class DeviceActivity extends AppCompatActivity {
                     new DeviceSettingsPref(DeviceActivity.this).storeConsumption(energy);
                     if (energy != 0) {
                         Toast.makeText(DeviceActivity.this, "Successfully Set Consumption", Toast.LENGTH_SHORT).show();
-                        dialogConsumption.dismiss();
                         Utils.isConsumptionControlled = true;
+                        dialogConsumption.dismiss();
                     } else {
                         Toast.makeText(DeviceActivity.this, "Consumption Set To Zero.. Setting No Cap On Consumption", Toast.LENGTH_SHORT).show();
-                        dialogConsumption.dismiss();
                         Utils.isConsumptionControlled = false;
+                        dialogConsumption.dismiss();
                     }
                 }
             }
         });
+        consumptionBinding.btnCancel.setOnClickListener(v -> dialogConsumption.dismiss());
     }
 
     private void getElapseTime() {
