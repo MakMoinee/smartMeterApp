@@ -124,6 +124,7 @@ public class DeviceActivity extends AppCompatActivity {
                             if (Utils.isVoltageControlled) {
                                 float mv = new DeviceSettingsPref(DeviceActivity.this).getVoltage();
                                 if (voltage > mv) {
+                                    Log.e("v","Voltage Exceeded, Turning it off ...");
                                     myDialog.setCustomMessage("Voltage Exceeded, Turning it off ...");
                                     myDialog.show();
                                     requestService.turnOffDevice(selectedDevice.getDeviceIP(), new DefaultBaseListener() {
@@ -157,6 +158,7 @@ public class DeviceActivity extends AppCompatActivity {
                                     float myKWH = new DeviceSettingsPref(DeviceActivity.this).getConsumption();
                                     if (energyKWh > myKWH) {
 
+                                        Log.e("v","Energy Consumption Exceeded, Turning it off ...");
                                         myDialog.setCustomMessage("Energy Consumption Exceeded, Turning it off ...");
                                         myDialog.show();
                                         requestService.turnOffDevice(selectedDevice.getDeviceIP(), new DefaultBaseListener() {
