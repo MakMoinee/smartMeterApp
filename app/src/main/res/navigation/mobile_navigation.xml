@@ -18,6 +18,12 @@
         tools:layout="@layout/fragment_gallery" />
 
     <fragment
+        android:id="@+id/nav_history"
+        android:name="com.thesis.smesurviveapp.ui.history.ConsumptionHistory"
+        android:label="Consumption History"
+        tools:layout="@layout/fragment_consumption_history" />
+
+    <fragment
         android:id="@+id/nav_logout"
         android:name="com.thesis.smesurviveapp.ui.LogoutFragment"
         android:label="Logout"

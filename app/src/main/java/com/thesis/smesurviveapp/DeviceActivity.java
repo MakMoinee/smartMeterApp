@@ -1,5 +1,6 @@
 package com.thesis.smesurviveapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -10,6 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.github.MakMoinee.library.dialogs.MyDialog;
 import com.github.MakMoinee.library.interfaces.DefaultBaseListener;
@@ -22,6 +24,7 @@ import com.thesis.smesurviveapp.models.Devices;
 import com.thesis.smesurviveapp.preference.DeviceSettingsPref;
 import com.thesis.smesurviveapp.services.DeviceDB;
 import com.thesis.smesurviveapp.services.DeviceRequestService;
+import com.thesis.smesurviveapp.services.MonitoringService;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -197,6 +200,9 @@ public class DeviceActivity extends AppCompatActivity {
                     myDialog.dismiss();
                     myDialog = new MyDialog(DeviceActivity.this);
                     Utils.isTurnedOn = false;
+                    Utils.rawDevice = "";
+                    Intent stopIntent = new Intent(DeviceActivity.this, MonitoringService.class);
+                    stopService(stopIntent);
                     Toast.makeText(DeviceActivity.this, "Successfully Turned Off Device Meter", Toast.LENGTH_SHORT).show();
                 }
 
@@ -217,6 +223,10 @@ public class DeviceActivity extends AppCompatActivity {
                 public <T> void onSuccess(T any) {
                     myDialog.dismiss();
                     Utils.isTurnedOn = true;
+                    Intent serviceIntent = new Intent(DeviceActivity.this, MonitoringService.class);
+                    Utils.rawDevice = new Gson().toJson(selectedDevice);
+                    ContextCompat.startForegroundService(DeviceActivity.this, serviceIntent);
+
                     Toast.makeText(DeviceActivity.this, "Successfully Turned On Device Meter", Toast.LENGTH_SHORT).show();
                 }
 
@@ -236,6 +246,9 @@ public class DeviceActivity extends AppCompatActivity {
                 public <T> void onSuccess(T any) {
                     myDialog.dismiss();
                     Utils.isTurnedOn = false;
+                    Intent stopIntent = new Intent(DeviceActivity.this, MonitoringService.class);
+                    stopService(stopIntent);
+
                     Toast.makeText(DeviceActivity.this, "Successfully Deleted Device", Toast.LENGTH_SHORT).show();
                     finish();
                 }

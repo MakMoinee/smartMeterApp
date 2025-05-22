@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
 
     <application
         android:allowBackup="true"
@@ -38,6 +40,11 @@
         <activity
             android:name=".DeviceActivity"
             android:screenOrientation="portrait" />
+        <service
+            android:name=".services.MonitoringService"
+            android:exported="false"
+            android:foregroundServiceType="connectedDevice|dataSync" />
+
     </application>
 
 </manifest>

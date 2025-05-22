@@ -13,6 +13,10 @@
             android:icon="@drawable/ic_devices"
             android:title="Devices" />
         <item
+            android:id="@+id/nav_history"
+            android:icon="@drawable/ic_currrent"
+            android:title="Consumption History"/>
+        <item
             android:id="@+id/nav_logout"
             android:icon="@drawable/ic_logout"
             android:title="Logout" />

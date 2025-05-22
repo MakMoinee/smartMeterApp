@@ -102,6 +102,51 @@ public class DeviceDB {
     }
 
 
+    @SuppressLint("Range")
+    public void fetchDeviceById(int deviceID, DefaultBaseListener listener) {
+        SQLiteDatabase db = sqLite.getReadableDatabase();
+        String[] columns = {"id", "userID", "deviceID"};
+        String selection = "deviceID=?";
+        String[] selectionArgs = {
+                Integer.toString(deviceID),
+        };
+
+        Cursor cursor = null;
+        int id = 0;
+        Devices device = null;
+        try {
+            cursor = db.query(TABLE_DEVICES, columns, selection, selectionArgs, null, null, null);
+
+            if (cursor != null && cursor.moveToFirst()) {
+                do {
+                    device = new Devices();
+                    device.setDeviceID(cursor.getInt(cursor.getColumnIndex("deviceID")));
+                    device.setUserID(cursor.getInt(cursor.getColumnIndex("userID")));
+                    device.setDeviceName(cursor.getString(cursor.getColumnIndex("deviceName")));
+                    device.setDeviceIP(cursor.getString(cursor.getColumnIndex("deviceIP")));
+                    device.setStatus(cursor.getString(cursor.getColumnIndex("status")));
+                    device.setRegisteredDate(cursor.getString(cursor.getColumnIndex("registeredDate")));
+
+
+                } while (cursor.moveToNext());
+
+                if (device != null && device.getDeviceID() != 0) {
+                    listener.onSuccess(device);
+                }
+            } else {
+                listener.onError(new Error("Consumptions not found for this device."));
+            }
+
+        } catch (Exception e) {
+            listener.onError(new Error("Error checking device: " + e.getMessage()));
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+            db.close();
+        }
+    }
+
 
     @SuppressLint("Range")
     public void fetchDevices(int userID, DefaultBaseListener listener) {
@@ -162,7 +207,6 @@ public class DeviceDB {
             db.close();
         }
     }
-
 
 
 }
