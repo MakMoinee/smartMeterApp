@@ -1,6 +1,7 @@
 package com.thesis.smesurviveapp.ui.history;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -98,7 +99,7 @@ public class ConsumptionHistory extends Fragment {
 
             @Override
             public void onError(Error error) {
-
+                Log.e("err", error.getLocalizedMessage());
             }
         });
 

@@ -105,7 +105,7 @@ public class DeviceDB {
     @SuppressLint("Range")
     public void fetchDeviceById(int deviceID, DefaultBaseListener listener) {
         SQLiteDatabase db = sqLite.getReadableDatabase();
-        String[] columns = {"id", "userID", "deviceID"};
+        String[] columns = {"userID", "deviceID","deviceName","deviceIP","status","registeredDate"};
         String selection = "deviceID=?";
         String[] selectionArgs = {
                 Integer.toString(deviceID),
