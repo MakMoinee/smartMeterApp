@@ -188,6 +188,7 @@ public class DeviceActivity extends AppCompatActivity {
                                     public void run() {
                                         Consumptions c = new Consumptions.ConsumptionBuilder()
                                                 .setConsumption(energyKWh)
+                                                .setUserID(selectedDevice.getUserID())
                                                 .setDeviceID(selectedDevice.getDeviceID())
                                                 .build();
                                         deviceConsumption.upsertData(c, new DefaultBaseListener() {
