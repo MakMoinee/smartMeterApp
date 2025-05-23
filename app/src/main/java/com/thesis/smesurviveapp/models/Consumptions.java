@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class Consumptions {
     private int id;
+    private int userID;
     private int deviceID;
     private double consumption;
 
@@ -14,12 +15,19 @@ public class Consumptions {
         this.id = builder.id;
         this.deviceID = builder.deviceID;
         this.consumption = builder.consumption;
+        this.userID = builder.userID;
     }
 
     public static class ConsumptionBuilder{
         private int id;
         private int deviceID;
+        private int userID;
         private double consumption;
+
+        public ConsumptionBuilder setUserID(int userID) {
+            this.userID = userID;
+            return this;
+        }
 
         public ConsumptionBuilder setId(int id) {
             this.id = id;
