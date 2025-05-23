@@ -38,6 +38,7 @@ public class LocalSQLite extends MSqliteDBHelper {
 
         db.execSQL("CREATE TABLE IF NOT EXISTS consumption (" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "userID INTEGER NOT NULL, " +
                 "deviceID INTEGER NOT NULL, " +
                 "consumption REAL NOT NULL)");
 
